@@ -18,6 +18,21 @@ public class ButtonSequence
         }
     }
 
+    public TargetButton[] GetTargetButtons()
+    {
+        var targetButtonArray = new TargetButton[_length];
+        var targetButtonPrefab = Resources.Load<TargetButton>("Prefabs/TargetButton");
+
+        for (var i = 0; i < _length; i++)
+        {
+            var targetButton = Object.Instantiate(targetButtonPrefab);
+            targetButton.Initialize(_sequence[i]);
+            targetButtonArray[i] = targetButton;
+        }
+
+        return targetButtonArray;
+    }
+
     public override string ToString()
     {
         var log = new StringBuilder();

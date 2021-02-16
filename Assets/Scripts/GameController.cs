@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private Transform ButtonSequenceContainer;
+
     private void Start()
     {
-        TestButtonSequence();
+        TestButtonSequence(5);
     }
 
-    private void TestButtonSequence()
+    private void TestButtonSequence(int length)
     {
-        Debug.Log(new ButtonSequence(3));
-        Debug.Log(new ButtonSequence(5));
-        Debug.Log(new ButtonSequence(7));
+        var buttonSequence = new ButtonSequence(length);
+        Debug.Log(buttonSequence.ToString());
+
+        var targetButtonArray = buttonSequence.GetTargetButtons();
+
+        foreach (var targetButton in targetButtonArray)
+        {
+            targetButton.transform.SetParent(ButtonSequenceContainer, false);
+        }
     }
 }

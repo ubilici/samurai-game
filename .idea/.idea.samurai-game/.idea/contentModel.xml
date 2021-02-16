@@ -10,6 +10,7 @@
           <e p="ButtonSequence.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
           <e p="GameSettings.cs" t="Include" />
+          <e p="TargetButton.cs" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">

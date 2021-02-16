@@ -20,8 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfe57be8-99ce-41d5-adae-bd5c0d8af5eb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +38,17 @@
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="bd85ac61-ed9e-4c14-bb65-12733cef91c9" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://D:/Developer/UnityProjects/samurai-game/Assets/Scenes/MainScene.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Developer/UnityProjects/samurai-game/Assets/Scenes/MainScene.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetButton.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/TargetButton.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TargetButton.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameController.cs" />
       </list>
     </option>
@@ -86,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1613391959410</updated>
       <workItem from="1613391962177" duration="2710000" />
-      <workItem from="1613460817040" duration="681000" />
+      <workItem from="1613460817040" duration="2407000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Unity files">
       <created>1613392117958</created>
@@ -109,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613394133965</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add TextMeshPro">
+      <created>1613463137131</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1613463137131</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +149,8 @@
     <MESSAGE value="Initial Unity files" />
     <MESSAGE value="Implement randomized button sequences" />
     <MESSAGE value="Set URP as main render pipeline" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set URP as main render pipeline" />
+    <MESSAGE value="Add TextMeshPro" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add TextMeshPro" />
   </component>
   <component name="WindowStateProjectService">
     <state x="773" y="236" key="RiderGenerateDialog" timestamp="1613392697487">
