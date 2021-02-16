@@ -20,9 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfe57be8-99ce-41d5-adae-bd5c0d8af5eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
     </list>
@@ -88,7 +85,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1613391959410</updated>
-      <workItem from="1613391962177" duration="1928000" />
+      <workItem from="1613391962177" duration="2710000" />
+      <workItem from="1613460817040" duration="681000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Unity files">
       <created>1613392117958</created>
@@ -97,7 +95,21 @@
       <option name="project" value="LOCAL" />
       <updated>1613392117958</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implement randomized button sequences">
+      <created>1613393991434</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1613393991434</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Set URP as main render pipeline">
+      <created>1613394133965</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613394133965</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,11 +127,14 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Initial Unity files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Unity files" />
+    <MESSAGE value="Implement randomized button sequences" />
+    <MESSAGE value="Set URP as main render pipeline" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set URP as main render pipeline" />
   </component>
   <component name="WindowStateProjectService">
     <state x="773" y="236" key="RiderGenerateDialog" timestamp="1613392697487">
@@ -130,9 +145,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1613392093149" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1613392122792">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1613394139988">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1613392122792" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1613394139988" />
   </component>
 </project>
