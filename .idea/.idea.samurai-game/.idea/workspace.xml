@@ -20,9 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfe57be8-99ce-41d5-adae-bd5c0d8af5eb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.samurai-game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
     </list>
@@ -47,8 +45,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TargetButton.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ButtonSequence.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameController.cs" />
       </list>
     </option>
@@ -94,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1613391959410</updated>
       <workItem from="1613391962177" duration="2710000" />
-      <workItem from="1613460817040" duration="2407000" />
+      <workItem from="1613460817040" duration="4236000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Unity files">
       <created>1613392117958</created>
@@ -124,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613463137131</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Show created button sequence on UI">
+      <created>1613464804186</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1613464804186</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +155,8 @@
     <MESSAGE value="Implement randomized button sequences" />
     <MESSAGE value="Set URP as main render pipeline" />
     <MESSAGE value="Add TextMeshPro" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add TextMeshPro" />
+    <MESSAGE value="Show created button sequence on UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show created button sequence on UI" />
   </component>
   <component name="WindowStateProjectService">
     <state x="773" y="236" key="RiderGenerateDialog" timestamp="1613392697487">
@@ -161,6 +167,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1613392093149" />
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog" timestamp="1613467035527">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1613467035527" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1613394139988">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

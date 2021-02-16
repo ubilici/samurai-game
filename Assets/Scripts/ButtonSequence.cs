@@ -1,36 +1,63 @@
 ﻿using System.Text;
 using UnityEngine;
 
+public enum KeyResult
+{
+    Wrong,
+    Correct,
+    Complete
+}
+
 public class ButtonSequence
 {
     private readonly int _length;
     private readonly KeyCode[] _sequence;
+    private readonly TargetButton[] _targetButtonArray;
 
-    public ButtonSequence(int length)
+    private int _sequenceIndex;
+
+    public ButtonSequence(int length, Transform container)
     {
         _length = length;
         _sequence = new KeyCode[length];
+        _sequenceIndex = 0;
+
+        // Create randomized sequence
         var possibleKeys = GameSettings.Instance.PossibleKeys;
 
         for (var i = 0; i < length; i++)
         {
             _sequence[i] = possibleKeys[Random.Range(0, possibleKeys.Length)];
         }
-    }
 
-    public TargetButton[] GetTargetButtons()
-    {
-        var targetButtonArray = new TargetButton[_length];
+        // Create TargetButtons
+        _targetButtonArray = new TargetButton[_length];
         var targetButtonPrefab = Resources.Load<TargetButton>("Prefabs/TargetButton");
 
         for (var i = 0; i < _length; i++)
         {
-            var targetButton = Object.Instantiate(targetButtonPrefab);
+            var targetButton = Object.Instantiate(targetButtonPrefab, container);
             targetButton.Initialize(_sequence[i]);
-            targetButtonArray[i] = targetButton;
+            _targetButtonArray[i] = targetButton;
+        }
+    }
+
+    public KeyResult CheckKey(KeyCode key)
+    {
+        if (_sequence[_sequenceIndex] == key)
+        {
+            _targetButtonArray[_sequenceIndex].gameObject.SetActive(false);
+            _sequenceIndex++;
+
+            return _sequenceIndex == _length ? KeyResult.Complete : KeyResult.Correct;
         }
 
-        return targetButtonArray;
+        return KeyResult.Wrong;
+    }
+
+    public void Destroy()
+    {
+        DestroyTargetButtons();
     }
 
     public override string ToString()
@@ -44,5 +71,13 @@ public class ButtonSequence
         }
 
         return log.ToString();
+    }
+
+    private void DestroyTargetButtons()
+    {
+        foreach (var targetButton in _targetButtonArray)
+        {
+            Object.Destroy(targetButton.gameObject);
+        }
     }
 }

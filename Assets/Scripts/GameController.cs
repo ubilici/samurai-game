@@ -4,21 +4,39 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private Transform ButtonSequenceContainer;
 
+    private ButtonSequence _currentButtonSequence;
+
     private void Start()
     {
-        TestButtonSequence(5);
+        CreateButtonSequence(3);
     }
 
-    private void TestButtonSequence(int length)
+    private void Update()
     {
-        var buttonSequence = new ButtonSequence(length);
-        Debug.Log(buttonSequence.ToString());
+        CheckInput();
+    }
 
-        var targetButtonArray = buttonSequence.GetTargetButtons();
+    private void CreateButtonSequence(int length)
+    {
+        _currentButtonSequence = new ButtonSequence(length, ButtonSequenceContainer);
+        Debug.Log(_currentButtonSequence);
+    }
 
-        foreach (var targetButton in targetButtonArray)
+    private void CheckInput()
+    {
+        foreach (var possibleKey in GameSettings.Instance.PossibleKeys)
         {
-            targetButton.transform.SetParent(ButtonSequenceContainer, false);
+            if (Input.GetKeyDown(possibleKey))
+            {
+                var result = _currentButtonSequence.CheckKey(possibleKey);
+                Debug.Log(result);
+
+                if (result == KeyResult.Wrong || result == KeyResult.Complete)
+                {
+                    _currentButtonSequence.Destroy();
+                    CreateButtonSequence(3);
+                }
+            }
         }
     }
 }
