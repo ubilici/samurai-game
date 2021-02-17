@@ -59,6 +59,14 @@ public class ButtonSequence
         return KeyResult.Wrong;
     }
 
+    public void FadeOutTargetButtons()
+    {
+        foreach (var targetButton in _targetButtonArray)
+        {
+            targetButton.FadeOut();
+        }
+    }
+
     public void Destroy()
     {
         DestroyTargetButtons();
@@ -81,7 +89,7 @@ public class ButtonSequence
     {
         foreach (var targetButton in _targetButtonArray)
         {
-            Object.Destroy(targetButton.gameObject);
+            targetButton.Destroy();
         }
     }
 }

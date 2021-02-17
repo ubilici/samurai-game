@@ -1,12 +1,17 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TargetButton : MonoBehaviour
 {
+    [SerializeField] private Image Background;
     [SerializeField] private TextMeshProUGUI ButtonText;
 
     private const float SingleKeyFontSize = 60;
     private const float MultipleKeyFontSize = 35;
+
+    private Sequence _fadeOutSequence;
 
     public void Initialize(KeyCode key)
     {
@@ -26,5 +31,18 @@ public class TargetButton : MonoBehaviour
         }
 
         ButtonText.text = text;
+    }
+
+    public void FadeOut()
+    {
+        _fadeOutSequence = DOTween.Sequence();
+        _fadeOutSequence.Append(Background.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+        _fadeOutSequence.Append(ButtonText.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+    }
+
+    public void Destroy()
+    {
+        _fadeOutSequence?.Kill();
+        Destroy(gameObject);
     }
 }

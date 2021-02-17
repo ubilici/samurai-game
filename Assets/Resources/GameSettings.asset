@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PossibleKeys: 7a0000007800000011010000130100001201000014010000
   SequenceTryTime: 1
+  ButtonFadeOutTime: 0.185

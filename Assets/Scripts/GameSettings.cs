@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "GameSettings", menuName = "ScriptableObjects/Create Game Settings", order = 1)]
 public class GameSettings : ScriptableObject
@@ -21,4 +20,5 @@ public class GameSettings : ScriptableObject
 
     public KeyCode[] PossibleKeys;
     public float SequenceTryTime;
+    public float ButtonFadeOutTime;
 }

@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private Transform ButtonSequenceContainer;
+    [SerializeField] private TextMeshProUGUI StateText;
 
     private ButtonSequence _currentButtonSequence;
     private bool _sequenceTryStarted;
@@ -10,7 +12,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        CreateButtonSequence(3);
+        CreateButtonSequence(5);
     }
 
     private void Update()
@@ -26,12 +28,19 @@ public class GameController : MonoBehaviour
     private void CreateButtonSequence(int length)
     {
         _currentButtonSequence = new ButtonSequence(length, ButtonSequenceContainer);
-        Debug.Log(_currentButtonSequence);
     }
 
     private void CheckTime()
     {
-        Debug.Log(_sequenceTryEndTime - Time.time);
+        var timeRemaining = _sequenceTryEndTime - Time.time;
+        if (timeRemaining < 0)
+        {
+            DestroyCurrentSequence(false);
+        }
+        else
+        {
+            StateText.text = $"{timeRemaining:F2}";
+        }
     }
 
     private void CheckInput()
@@ -41,27 +50,40 @@ public class GameController : MonoBehaviour
             if (Input.GetKeyDown(possibleKey))
             {
                 var result = _currentButtonSequence.CheckKey(possibleKey);
-                Debug.Log(result);
 
                 switch (result)
                 {
                     case KeyResult.Correct:
                         if (!_sequenceTryStarted)
                         {
+                            _currentButtonSequence.FadeOutTargetButtons();
                             _sequenceTryEndTime = Time.time + GameSettings.Instance.SequenceTryTime;
                             _sequenceTryStarted = true;
                         }
 
                         break;
+
                     case KeyResult.Wrong:
+                        DestroyCurrentSequence(false);
+                        break;
+
                     case KeyResult.Complete:
-                        _sequenceTryStarted = false;
-                        _sequenceTryEndTime = default;
-                        _currentButtonSequence.Destroy();
-                        CreateButtonSequence(3);
+                        DestroyCurrentSequence(true);
                         break;
                 }
             }
         }
+    }
+
+    private void DestroyCurrentSequence(bool isComplete)
+    {
+        StateText.text = isComplete ? "Success!" : "Failed!";
+
+        _sequenceTryStarted = false;
+        _sequenceTryEndTime = default;
+        _currentButtonSequence.Destroy();
+
+        // Create another sequence for testing
+        CreateButtonSequence(5);
     }
 }
