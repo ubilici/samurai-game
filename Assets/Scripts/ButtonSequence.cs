@@ -16,6 +16,8 @@ public class ButtonSequence
 
     private int _sequenceIndex;
 
+    private const float ButtonOffset = 130;
+
     public ButtonSequence(int length, Transform container)
     {
         _length = length;
@@ -33,10 +35,12 @@ public class ButtonSequence
         // Create TargetButtons
         _targetButtonArray = new TargetButton[_length];
         var targetButtonPrefab = Resources.Load<TargetButton>("Prefabs/TargetButton");
+        var middleIndex = (_length - 1) / 2;
 
         for (var i = 0; i < _length; i++)
         {
             var targetButton = Object.Instantiate(targetButtonPrefab, container);
+            targetButton.transform.localPosition = new Vector3((i - middleIndex) * ButtonOffset, 0);
             targetButton.Initialize(_sequence[i]);
             _targetButtonArray[i] = targetButton;
         }
