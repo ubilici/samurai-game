@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private Transform BackgroundIsland;
     [SerializeField] private Transform ButtonSequenceContainer;
     [SerializeField] private TextMeshProUGUI StateText;
 
     private ButtonSequence _currentButtonSequence;
     private bool _sequenceTryStarted;
     private float _sequenceTryEndTime;
+
+    private float BackgroundRotateSpeed = 0.05f;
 
     private void Start()
     {
@@ -17,6 +20,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        RotateBackground();
         CheckInput();
 
         if (_sequenceTryStarted)
@@ -73,6 +77,11 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void RotateBackground()
+    {
+        BackgroundIsland.Rotate(Vector3.up, BackgroundRotateSpeed);
     }
 
     private void DestroyCurrentSequence(bool isComplete)
