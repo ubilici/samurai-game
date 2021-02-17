@@ -5,6 +5,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform ButtonSequenceContainer;
 
     private ButtonSequence _currentButtonSequence;
+    private bool _sequenceTryStarted;
+    private float _sequenceTryEndTime;
 
     private void Start()
     {
@@ -14,12 +16,22 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         CheckInput();
+
+        if (_sequenceTryStarted)
+        {
+            CheckTime();
+        }
     }
 
     private void CreateButtonSequence(int length)
     {
         _currentButtonSequence = new ButtonSequence(length, ButtonSequenceContainer);
         Debug.Log(_currentButtonSequence);
+    }
+
+    private void CheckTime()
+    {
+        Debug.Log(_sequenceTryEndTime - Time.time);
     }
 
     private void CheckInput()
@@ -31,10 +43,23 @@ public class GameController : MonoBehaviour
                 var result = _currentButtonSequence.CheckKey(possibleKey);
                 Debug.Log(result);
 
-                if (result == KeyResult.Wrong || result == KeyResult.Complete)
+                switch (result)
                 {
-                    _currentButtonSequence.Destroy();
-                    CreateButtonSequence(3);
+                    case KeyResult.Correct:
+                        if (!_sequenceTryStarted)
+                        {
+                            _sequenceTryEndTime = Time.time + GameSettings.Instance.SequenceTryTime;
+                            _sequenceTryStarted = true;
+                        }
+
+                        break;
+                    case KeyResult.Wrong:
+                    case KeyResult.Complete:
+                        _sequenceTryStarted = false;
+                        _sequenceTryEndTime = default;
+                        _currentButtonSequence.Destroy();
+                        CreateButtonSequence(3);
+                        break;
                 }
             }
         }
