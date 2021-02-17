@@ -37,7 +37,7 @@ public class TargetButton : MonoBehaviour
     {
         _fadeOutSequence = DOTween.Sequence();
         _fadeOutSequence.Append(Background.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
-        _fadeOutSequence.Append(ButtonText.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+        _fadeOutSequence.Join(ButtonText.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
     }
 
     public void Destroy()
