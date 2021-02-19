@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        RotateBackground();
+        // RotateBackground();
         CheckInput();
 
         if (_sequenceTryStarted)
