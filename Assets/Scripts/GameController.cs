@@ -6,21 +6,23 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform BackgroundIsland;
     [SerializeField] private Transform ButtonSequenceContainer;
     [SerializeField] private TextMeshProUGUI StateText;
+    [SerializeField] private SamuraiController SamuraiController;
 
     private ButtonSequence _currentButtonSequence;
     private bool _sequenceTryStarted;
     private float _sequenceTryEndTime;
 
-    private float BackgroundRotateSpeed = 0.05f;
+    private float BackgroundRotateSpeed = 0.025f;
 
     private void Start()
     {
         CreateButtonSequence(5);
+        SamuraiController.RunToRandomPosition();
     }
 
     private void Update()
     {
-        // RotateBackground();
+        RotateBackground();
         CheckInput();
 
         if (_sequenceTryStarted)
