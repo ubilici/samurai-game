@@ -17,12 +17,11 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         CreateButtonSequence(5);
-        SamuraiController.RunToRandomPosition();
     }
 
     private void Update()
     {
-        RotateBackground();
+        // RotateBackground();
         CheckInput();
 
         if (_sequenceTryStarted)
@@ -78,6 +77,13 @@ public class GameController : MonoBehaviour
                         break;
                 }
             }
+        }
+
+        // Samurai controller test code
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit))
+        {
+            if (Input.GetMouseButtonDown(0)) SamuraiController.Run(hit.point);
+            else if (Input.GetMouseButtonDown(1)) SamuraiController.Jump(hit.point);
         }
     }
 
