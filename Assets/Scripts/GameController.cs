@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private Transform BackgroundIsland;
     [SerializeField] private Transform ButtonSequenceContainer;
     [SerializeField] private TextMeshProUGUI StateText;
     [SerializeField] private SamuraiController SamuraiController;
+    [SerializeField] private CameraController CameraController;
 
     private ButtonSequence _buttonSequence;
     private bool _sequenceInputsEnabled;
@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour
     private Sequence _animationSequence;
     private Sequence _textSequence;
 
-    private const float BackgroundRotateSpeed = 0.025f;
     private const float ButtonSequenceStartInterval = 0.5f;
     private const float SessionRetryInterval = 0.65f;
     private const float StateTextFadeOutInterval = 1.25f;
@@ -27,15 +26,22 @@ public class GameController : MonoBehaviour
     private static readonly Vector3 SamuraiMovePosition = new Vector3(-1.95f, 1.395f, -2.4f);
     private static readonly Vector3 SamuraiJumpPosition = new Vector3(-3.45f, 1.395f, -2.4f);
 
-    private void Start()
+    public void Play()
     {
-        InitializeSession();
-        StartSession();
+        CameraController.MoveToGameView(() =>
+        {
+            InitializeSession();
+            StartSession();
+        });
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     private void Update()
     {
-        // RotateBackground();
         if (_sequenceInputsEnabled) CheckInput();
         if (_sequenceTryStarted) CheckTime();
     }
@@ -114,11 +120,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void RotateBackground()
-    {
-        BackgroundIsland.Rotate(Vector3.up, BackgroundRotateSpeed);
     }
 
     private void ShowStateText(bool isComplete)
