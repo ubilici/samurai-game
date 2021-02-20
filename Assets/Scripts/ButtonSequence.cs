@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public enum KeyResult
 {
@@ -13,16 +16,18 @@ public class ButtonSequence
     private readonly int _length;
     private readonly KeyCode[] _sequence;
     private readonly TargetButton[] _targetButtonArray;
+    private readonly Action _onSessionComplete;
 
     private int _sequenceIndex;
 
     private const float ButtonOffset = 130;
 
-    public ButtonSequence(int length, Transform container)
+    public ButtonSequence(int length, Transform container, Action onSessionComplete)
     {
         _length = length;
         _sequence = new KeyCode[length];
         _sequenceIndex = 0;
+        _onSessionComplete = onSessionComplete;
 
         // Create randomized sequence
         var possibleKeys = GameSettings.Instance.PossibleKeys;
@@ -59,6 +64,14 @@ public class ButtonSequence
         return KeyResult.Wrong;
     }
 
+    public void FadeInTargetButtons()
+    {
+        foreach (var targetButton in _targetButtonArray)
+        {
+            targetButton.FadeIn();
+        }
+    }
+
     public void FadeOutTargetButtons()
     {
         foreach (var targetButton in _targetButtonArray)
@@ -70,6 +83,7 @@ public class ButtonSequence
     public void Destroy()
     {
         DestroyTargetButtons();
+        _onSessionComplete();
     }
 
     public override string ToString()

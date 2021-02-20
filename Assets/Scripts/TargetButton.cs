@@ -10,11 +10,15 @@ public class TargetButton : MonoBehaviour
 
     private const float SingleKeyFontSize = 60;
     private const float MultipleKeyFontSize = 35;
+    private const float FadeInTime = 0.4f;
 
-    private Sequence _fadeOutSequence;
+    private Sequence _fadeSequence;
 
     public void Initialize(KeyCode key)
     {
+        SetAlpha(Background, 0);
+        SetAlpha(ButtonText, 0);
+
         var text = key.ToString();
         if (text.Length == 1)
         {
@@ -33,16 +37,30 @@ public class TargetButton : MonoBehaviour
         ButtonText.text = text;
     }
 
+    public void FadeIn()
+    {
+        _fadeSequence = DOTween.Sequence();
+        _fadeSequence.Append(Background.DOFade(1, FadeInTime));
+        _fadeSequence.Join(ButtonText.DOFade(1, FadeInTime));
+    }
+
     public void FadeOut()
     {
-        _fadeOutSequence = DOTween.Sequence();
-        _fadeOutSequence.Append(Background.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
-        _fadeOutSequence.Join(ButtonText.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+        _fadeSequence = DOTween.Sequence();
+        _fadeSequence.Append(Background.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+        _fadeSequence.Join(ButtonText.DOFade(0, GameSettings.Instance.ButtonFadeOutTime));
+    }
+
+    private static void SetAlpha(Graphic image, float alpha)
+    {
+        var color = image.color;
+        color.a = alpha;
+        image.color = color;
     }
 
     public void Destroy()
     {
-        _fadeOutSequence?.Kill();
+        _fadeSequence?.Kill();
         Destroy(gameObject);
     }
 }

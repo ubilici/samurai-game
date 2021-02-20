@@ -1,5 +1,7 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -8,31 +10,69 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StateText;
     [SerializeField] private SamuraiController SamuraiController;
 
-    private ButtonSequence _currentButtonSequence;
+    private ButtonSequence _buttonSequence;
+    private bool _sequenceInputsEnabled;
     private bool _sequenceTryStarted;
     private float _sequenceTryEndTime;
+    private Sequence _animationSequence;
+    private Sequence _textSequence;
 
-    private float BackgroundRotateSpeed = 0.025f;
+    private const float BackgroundRotateSpeed = 0.025f;
+    private const float ButtonSequenceStartInterval = 0.5f;
+    private const float SessionRetryInterval = 0.65f;
+    private const float StateTextFadeOutInterval = 1.25f;
+    private const float StateTextFadeOutDuration = 0.25f;
+
+    private static readonly Vector3 SamuraiSpawnPosition = new Vector3(-7, 1.395f, -2.4f);
+    private static readonly Vector3 SamuraiMovePosition = new Vector3(-1.95f, 1.395f, -2.4f);
+    private static readonly Vector3 SamuraiJumpPosition = new Vector3(-3.45f, 1.395f, -2.4f);
 
     private void Start()
     {
-        CreateButtonSequence(5);
+        InitializeSession();
+        StartSession();
     }
 
     private void Update()
     {
         // RotateBackground();
-        CheckInput();
-
-        if (_sequenceTryStarted)
-        {
-            CheckTime();
-        }
+        if (_sequenceInputsEnabled) CheckInput();
+        if (_sequenceTryStarted) CheckTime();
     }
 
-    private void CreateButtonSequence(int length)
+    private void InitializeSession()
     {
-        _currentButtonSequence = new ButtonSequence(length, ButtonSequenceContainer);
+        SamuraiController.transform.position = SamuraiSpawnPosition;
+        SamuraiController.gameObject.SetActive(true);
+    }
+
+    private void StartSession()
+    {
+        _animationSequence?.Kill();
+        _animationSequence = DOTween.Sequence();
+
+        _buttonSequence = new ButtonSequence(5, ButtonSequenceContainer, EndSession);
+
+        _animationSequence.Append(SamuraiController.Run(SamuraiMovePosition));
+        _animationSequence.AppendCallback(() =>
+        {
+            SamuraiController.DrawSword();
+            _buttonSequence.FadeInTargetButtons();
+        });
+        _animationSequence.AppendInterval(ButtonSequenceStartInterval);
+        _animationSequence.AppendCallback(() => { _sequenceInputsEnabled = true; });
+    }
+
+    private void EndSession()
+    {
+        _sequenceInputsEnabled = false;
+
+        _animationSequence?.Kill();
+        _animationSequence = DOTween.Sequence();
+
+        _animationSequence.Append(SamuraiController.Jump(SamuraiJumpPosition));
+        _animationSequence.AppendInterval(SessionRetryInterval);
+        _animationSequence.AppendCallback(StartSession);
     }
 
     private void CheckTime()
@@ -42,10 +82,6 @@ public class GameController : MonoBehaviour
         {
             DestroyCurrentSequence(false);
         }
-        else
-        {
-            StateText.text = $"{timeRemaining:F2}";
-        }
     }
 
     private void CheckInput()
@@ -54,14 +90,14 @@ public class GameController : MonoBehaviour
         {
             if (Input.GetKeyDown(possibleKey))
             {
-                var result = _currentButtonSequence.CheckKey(possibleKey);
+                var result = _buttonSequence.CheckKey(possibleKey);
 
                 switch (result)
                 {
                     case KeyResult.Correct:
                         if (!_sequenceTryStarted)
                         {
-                            _currentButtonSequence.FadeOutTargetButtons();
+                            _buttonSequence.FadeOutTargetButtons();
                             _sequenceTryEndTime = Time.time + GameSettings.Instance.SequenceTryTime;
                             _sequenceTryStarted = true;
                         }
@@ -78,13 +114,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-
-        // Samurai controller test code
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit))
-        {
-            if (Input.GetMouseButtonDown(0)) SamuraiController.Run(hit.point);
-            else if (Input.GetMouseButtonDown(1)) SamuraiController.Jump(hit.point);
-        }
     }
 
     private void RotateBackground()
@@ -92,15 +121,31 @@ public class GameController : MonoBehaviour
         BackgroundIsland.Rotate(Vector3.up, BackgroundRotateSpeed);
     }
 
+    private void ShowStateText(bool isComplete)
+    {
+        _textSequence?.Kill();
+        _textSequence = DOTween.Sequence();
+
+        SetAlpha(StateText, 1);
+        StateText.text = isComplete ? "Success!" : "Failed!";
+
+        _textSequence.AppendInterval(StateTextFadeOutInterval);
+        _textSequence.Append(StateText.DOFade(0, StateTextFadeOutDuration));
+    }
+
+    private static void SetAlpha(Graphic image, float alpha)
+    {
+        var color = image.color;
+        color.a = alpha;
+        image.color = color;
+    }
+
     private void DestroyCurrentSequence(bool isComplete)
     {
-        StateText.text = isComplete ? "Success!" : "Failed!";
+        ShowStateText(isComplete);
 
         _sequenceTryStarted = false;
         _sequenceTryEndTime = default;
-        _currentButtonSequence.Destroy();
-
-        // Create another sequence for testing
-        CreateButtonSequence(5);
+        _buttonSequence.Destroy();
     }
 }

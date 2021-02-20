@@ -18,7 +18,7 @@ public class SamuraiController : MonoBehaviour
     private static readonly int DrawTrigger = Animator.StringToHash("Draw");
     private static readonly int JumpTrigger = Animator.StringToHash("Jump");
 
-    public void Run(Vector3 target)
+    public Sequence Run(Vector3 target)
     {
         var current = transform.position;
         var distance = Vector3.Distance(target, current);
@@ -31,11 +31,12 @@ public class SamuraiController : MonoBehaviour
         _runSequence.Join(transform.DOLookAt(target, RotateDuration));
         _runSequence.Join(transform.DOMove(target, distance * RunSpeed));
 
-        _runSequence.onComplete = () => { SetTrigger(IdleTrigger); };
         _runSequence.onKill = () => { SetTrigger(IdleTrigger); };
+
+        return _runSequence;
     }
 
-    public void Jump(Vector3 target)
+    public Sequence Jump(Vector3 target)
     {
         var current = transform.position;
         var lookTarget = current * 2 - target;
@@ -49,8 +50,14 @@ public class SamuraiController : MonoBehaviour
         _jumpSequence.Join(transform.DOLookAt(lookTarget, RotateDuration));
         _runSequence.Join(transform.DOJump(target, JumpPower, 1, JumpDuration));
 
-        _jumpSequence.onComplete = () => { SetTrigger(IdleTrigger); };
         _jumpSequence.onKill = () => { SetTrigger(IdleTrigger); };
+
+        return _jumpSequence;
+    }
+
+    public void DrawSword()
+    {
+        SetTrigger(DrawTrigger);
     }
 
     private void SetTrigger(int trigger)
