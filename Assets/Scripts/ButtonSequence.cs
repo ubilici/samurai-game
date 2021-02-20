@@ -80,10 +80,10 @@ public class ButtonSequence
         }
     }
 
-    public void Destroy()
+    public void Destroy(bool invokeOnComplete)
     {
         DestroyTargetButtons();
-        _onSessionComplete();
+        if (invokeOnComplete) _onSessionComplete();
     }
 
     public override string ToString()

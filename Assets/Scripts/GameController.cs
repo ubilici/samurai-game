@@ -3,6 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ViewMode
+{
+    Menu,
+    Game
+}
+
 public class GameController : MonoBehaviour
 {
     [SerializeField] private Transform ButtonSequenceContainer;
@@ -11,6 +17,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private CameraController CameraController;
     [SerializeField] private AudioController AudioController;
 
+    private ViewMode _viewMode = ViewMode.Menu;
     private ButtonSequence _buttonSequence;
     private bool _sequenceInputsEnabled;
     private bool _sequenceTryStarted;
@@ -43,8 +50,9 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (_sequenceInputsEnabled) CheckInput();
-        if (_sequenceTryStarted) CheckTime();
+        CheckGeneralInput();
+        if (_viewMode == ViewMode.Game && _sequenceInputsEnabled) CheckGameInput();
+        if (_viewMode == ViewMode.Game && _sequenceTryStarted) CheckTime();
     }
 
     private void InitializeSession()
@@ -58,6 +66,7 @@ public class GameController : MonoBehaviour
         _animationSequence?.Kill();
         _animationSequence = DOTween.Sequence();
 
+        _viewMode = ViewMode.Game;
         _buttonSequence = new ButtonSequence(5, ButtonSequenceContainer, EndSession);
 
         _animationSequence.Append(SamuraiController.Run(SamuraiMovePosition));
@@ -82,16 +91,48 @@ public class GameController : MonoBehaviour
         _animationSequence.AppendCallback(StartSession);
     }
 
+    private void ClearSession()
+    {
+        _animationSequence?.Kill();
+        _animationSequence = DOTween.Sequence();
+
+        _viewMode = ViewMode.Menu;
+        DestroyCurrentSequence(false, false);
+
+        _animationSequence.Append(SamuraiController.Run(SamuraiSpawnPosition));
+        _animationSequence.AppendCallback(() =>
+        {
+            SamuraiController.gameObject.SetActive(false);
+            CameraController.MoveToMenuView();
+        });
+    }
+
+    private void CheckGeneralInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            switch (_viewMode)
+            {
+                case ViewMode.Menu:
+                    Quit();
+                    break;
+                case ViewMode.Game:
+                    ClearSession();
+                    break;
+            }
+        }
+    }
+
     private void CheckTime()
     {
         var timeRemaining = _sequenceTryEndTime - Time.time;
         if (timeRemaining < 0)
         {
-            DestroyCurrentSequence(false);
+            DestroyCurrentSequence(false, true);
         }
     }
 
-    private void CheckInput()
+    private void CheckGameInput()
     {
         foreach (var possibleKey in GameSettings.Instance.PossibleKeys)
         {
@@ -113,11 +154,11 @@ public class GameController : MonoBehaviour
                         break;
 
                     case KeyResult.Wrong:
-                        DestroyCurrentSequence(false);
+                        DestroyCurrentSequence(false, true);
                         break;
 
                     case KeyResult.Complete:
-                        DestroyCurrentSequence(true);
+                        DestroyCurrentSequence(true, true);
                         break;
                 }
             }
@@ -143,12 +184,13 @@ public class GameController : MonoBehaviour
         image.color = color;
     }
 
-    private void DestroyCurrentSequence(bool isComplete)
+    private void DestroyCurrentSequence(bool isComplete, bool invokeOnComplete)
     {
-        ShowStateText(isComplete);
+        if (invokeOnComplete) ShowStateText(isComplete);
 
         _sequenceTryStarted = false;
+        _sequenceInputsEnabled = false;
         _sequenceTryEndTime = default;
-        _buttonSequence.Destroy();
+        _buttonSequence.Destroy(invokeOnComplete);
     }
 }

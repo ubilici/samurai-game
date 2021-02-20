@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
         RotateIsland();
     }
 
-    public void MoveToMenuView(Action onComplete)
+    public void MoveToMenuView()
     {
         _moveSequence?.Kill();
         _moveSequence = DOTween.Sequence();
@@ -41,8 +41,6 @@ public class CameraController : MonoBehaviour
 
         _moveSequence.AppendInterval(0.2f);
         _moveSequence.Append(MenuUICanvasGroup.DOFade(1, FadeDuration));
-
-        _moveSequence.onComplete = onComplete.Invoke;
     }
 
     public void MoveToGameView(Action onComplete)

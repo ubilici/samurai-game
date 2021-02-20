@@ -13,7 +13,6 @@ public class SamuraiController : MonoBehaviour
     private const float JumpDuration = 0.5f;
     private const float RotateDuration = 0.2f;
 
-    private static readonly int IdleTrigger = Animator.StringToHash("Idle");
     private static readonly int RunTrigger = Animator.StringToHash("Run");
     private static readonly int DrawTrigger = Animator.StringToHash("Draw");
     private static readonly int JumpTrigger = Animator.StringToHash("Jump");
@@ -31,8 +30,6 @@ public class SamuraiController : MonoBehaviour
         _runSequence.Join(transform.DOLookAt(target, RotateDuration));
         _runSequence.Join(transform.DOMove(target, distance * RunSpeed));
 
-        _runSequence.onKill = () => { SetTrigger(IdleTrigger); };
-
         return _runSequence;
     }
 
@@ -49,8 +46,6 @@ public class SamuraiController : MonoBehaviour
         _jumpSequence.AppendCallback(() => { SetTrigger(JumpTrigger); });
         _jumpSequence.Join(transform.DOLookAt(lookTarget, RotateDuration));
         _runSequence.Join(transform.DOJump(target, JumpPower, 1, JumpDuration));
-
-        _jumpSequence.onKill = () => { SetTrigger(IdleTrigger); };
 
         return _jumpSequence;
     }
