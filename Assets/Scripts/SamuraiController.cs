@@ -9,6 +9,7 @@ public class SamuraiController : MonoBehaviour
     private Sequence _jumpSequence;
 
     private const float RunSpeed = 0.2f;
+    private const float JumpPower = 1.5f;
     private const float JumpDuration = 0.5f;
     private const float RotateDuration = 0.2f;
 
@@ -46,7 +47,7 @@ public class SamuraiController : MonoBehaviour
 
         _jumpSequence.AppendCallback(() => { SetTrigger(JumpTrigger); });
         _jumpSequence.Join(transform.DOLookAt(lookTarget, RotateDuration));
-        _jumpSequence.Join(transform.DOMove(target, JumpDuration));
+        _runSequence.Join(transform.DOJump(target, JumpPower, 1, JumpDuration));
 
         _jumpSequence.onComplete = () => { SetTrigger(IdleTrigger); };
         _jumpSequence.onKill = () => { SetTrigger(IdleTrigger); };
