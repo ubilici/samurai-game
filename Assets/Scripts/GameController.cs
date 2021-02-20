@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StateText;
     [SerializeField] private SamuraiController SamuraiController;
     [SerializeField] private CameraController CameraController;
+    [SerializeField] private AudioController AudioController;
 
     private ButtonSequence _buttonSequence;
     private bool _sequenceInputsEnabled;
@@ -96,6 +97,7 @@ public class GameController : MonoBehaviour
         {
             if (Input.GetKeyDown(possibleKey))
             {
+                AudioController.PlayRandomSwordSwingClip();
                 var result = _buttonSequence.CheckKey(possibleKey);
 
                 switch (result)
